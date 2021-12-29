@@ -1,0 +1,22 @@
+import * as originMiniTicker from "../clients/origin-mini-ticker";
+import * as originTicker from "../clients/origin-ticker";
+import * as originBookTicker from "../clients/origin-book-ticker";
+import * as originTradeStream from "../clients/origin-trade-stream";
+import * as assetMarkets from "./market";
+
+function startServices() {
+    assetMarkets.getAssetMarkets();
+
+    originMiniTicker.originMiniTickerClient;
+    originMiniTicker.wssMiniTickerServer;
+
+    originTicker.originTickerClient;
+    originTicker.wssTickerServer;
+
+    originBookTicker.originBookTickerClient;
+    originBookTicker.wssBookTickerServer;
+
+    originTradeStream.handleServerUpgrade(null, null, null, null);
+}
+
+export {startServices};
