@@ -6,6 +6,8 @@ import * as originBookTicker from "./clients/origin-book-ticker";
 import * as tradeStream from "./clients/origin-trade-stream";
 import * as aggregateTrade from "./clients/origin-aggregate-trade";
 import * as individualMiniTicker from "./clients/origin-mini-ticker-individual";
+import * as individualTicker from "./clients/origin-ticker-individual";
+
 
 let currentPathName: string;
 
@@ -33,6 +35,11 @@ function handler(request: any, socket: any, head: any) {
         individualMiniTicker.validPair(currentPathName).then(validatedPair => {
             if (null === validatedPair) {socket.destroy(); console.error('INVALID PAIR');}
             else individualMiniTicker.handleServerUpgrade(request, socket, head, currentPathName);
+        })
+    } else if (currentPathName.includes(individualTicker.uri)) {
+        individualTicker.validPair(currentPathName).then(validatedPair => {
+            if (null === validatedPair) {socket.destroy(); console.error('INVALID PAIR');}
+            else individualTicker.handleServerUpgrade(request, socket, head, currentPathName);
         })
     } else {
         socket.destroy();
