@@ -37,7 +37,6 @@ function handleServerUpgrade(request: any, socket: any, head: any, currentPathNa
             wssTradeStreamServers[pair].emit('connection', ws, request);
         });
     });
-
 }
 
 const validPair = async function validatePair(currentPathName: any) {

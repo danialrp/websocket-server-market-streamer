@@ -4,9 +4,9 @@ env.config();
 import * as WebSocket from "ws";
 import * as mongoClient from "../utils/mongo";
 
-const uri = '/origin/aggregateTrade@';
-const clientUriAppend = '@aggTrade';
-const consoleConnectionMsg = `Connected To Aggregate Trade Socket.`;
+const uri = '/origin/miniTicker@';
+const clientUriAppend = '@miniTicker';
+const consoleConnectionMsg = `Connected To Individual Mini Ticker Socket.`;
 
 let originClients = {};
 let wssServers = {};
