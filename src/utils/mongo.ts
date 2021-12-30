@@ -18,7 +18,7 @@ async function findManyInCollection(baseCollection: any, query: any) {
             resultsArr.push(data);
         });
     } finally {
-        await client.close();
+        // await client.close();
     }
     return resultsArr;
 }
@@ -89,6 +89,10 @@ async function deleteInCollection(baseCollection: any, query: any) {
     }
 }
 
+async function closeConnection() {
+    await client.close();
+}
+
 export {
     findManyInCollection,
     findInCollection,
@@ -96,5 +100,6 @@ export {
     insertManyToCollection,
     updateInCollection,
     updateManyInCollection,
-    deleteInCollection
+    deleteInCollection,
+    closeConnection
 }

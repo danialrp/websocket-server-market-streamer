@@ -2,6 +2,7 @@ import * as originMiniTicker from "../clients/origin-mini-ticker";
 import * as originTicker from "../clients/origin-ticker";
 import * as originBookTicker from "../clients/origin-book-ticker";
 import * as originTradeStream from "../clients/origin-trade-stream";
+import * as aggregateTrade from "../clients/origin-aggregate-trade";
 import * as assetMarkets from "./market";
 
 function startServices() {
@@ -17,6 +18,7 @@ function startServices() {
     originBookTicker.wssBookTickerServer;
 
     originTradeStream.handleServerUpgrade(null, null, null, null);
+    aggregateTrade.handleServerUpgrade(null, null, null, null);
 }
 
 export {startServices};

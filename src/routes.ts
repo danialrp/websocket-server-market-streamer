@@ -4,6 +4,7 @@ import * as originMiniTicker from "./clients/origin-mini-ticker";
 import * as originTicker from "./clients/origin-ticker";
 import * as originBookTicker from "./clients/origin-book-ticker";
 import * as tradeStream from "./clients/origin-trade-stream";
+import * as aggregateTrade from "./clients/origin-aggregate-trade";
 
 let currentPathName: string;
 
@@ -21,6 +22,11 @@ function handler(request: any, socket: any, head: any) {
         tradeStream.validPair(currentPathName).then(validatedPair => {
             if (null === validatedPair) {socket.destroy(); console.error('INVALID PAIR');}
             else tradeStream.handleServerUpgrade(request, socket, head, currentPathName);
+        })
+    } else if (currentPathName.includes(aggregateTrade.uri)) {
+        aggregateTrade.validPair(currentPathName).then(validatedPair => {
+            if (null === validatedPair) {socket.destroy(); console.error('INVALID PAIR');}
+            else aggregateTrade.handleServerUpgrade(request, socket, head, currentPathName);
         })
     } else {
         socket.destroy();
