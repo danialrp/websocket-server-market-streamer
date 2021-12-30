@@ -8,13 +8,13 @@ const dbName = process.env.MONGODB_NAME;
 // @ts-ignore
 const client = new MongoClient(connectionUrl);
 
-async function findAllInCollection(baseCollection: any) {
+async function findManyInCollection(baseCollection: any, query: any) {
     let resultsArr: WithId<Document>[] = [];
     try {
         await client.connect();
         const database = client.db(dbName);
         const collection = database.collection(baseCollection);
-        await collection.find().forEach(function (data) {
+        await collection.find(query, {}).forEach(function (data) {
             resultsArr.push(data);
         });
     } finally {
@@ -56,18 +56,29 @@ async function insertManyToCollection(baseCollection: any, documents: any, optio
     }
 }
 
-async function updateInCollection(baseCollection: any, filter: any, options: any, document: any) {
+async function updateInCollection(baseCollection: any, query: any, document: any, options: any) {
     try {
         await client.connect();
         const database = client.db(dbName);
         const collection = database.collection(baseCollection);
-        return await collection.updateOne(filter, document, options);
+        return await collection.updateOne(query, document, options);
     } finally {
         await client.close();
     }
 }
 
-async function deleteInCollection(baseCollection: any, query: any, options: any) {
+async function updateManyInCollection(baseCollection: any, query: any, document: any, options: any) {
+    try {
+        await client.connect();
+        const database = client.db(dbName);
+        const collection = database.collection(baseCollection);
+        await collection.updateMany(query, document);
+    } finally {
+        await client.close();
+    }
+}
+
+async function deleteInCollection(baseCollection: any, query: any) {
     try {
         await client.connect();
         const database = client.db(dbName);
@@ -79,10 +90,11 @@ async function deleteInCollection(baseCollection: any, query: any, options: any)
 }
 
 export {
-    findAllInCollection,
+    findManyInCollection,
     findInCollection,
     insertToCollection,
     insertManyToCollection,
     updateInCollection,
+    updateManyInCollection,
     deleteInCollection
 }

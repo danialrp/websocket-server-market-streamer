@@ -19,12 +19,12 @@ function handler(request: any, socket: any, head: any) {
         originBookTicker.handleServerUpgrade(request, socket, head);
     } else if (currentPathName.includes(tradeStream.uri)) {
         tradeStream.validPair(currentPathName).then(validatedPair => {
-            if (null === validatedPair) socket.destroy();
+            if (null === validatedPair) {socket.destroy(); console.error('INVALID PAIR');}
             else tradeStream.handleServerUpgrade(request, socket, head, currentPathName);
         })
     } else {
         socket.destroy();
-        console.log('invalid patheeee');
+        console.error('INVALID PATH');
     }
 }
 

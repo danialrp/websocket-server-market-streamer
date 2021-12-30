@@ -1,5 +1,3 @@
-import {response} from "express";
-
 const env = require('dotenv');
 env.config();
 
@@ -20,12 +18,16 @@ function handleServerUpgrade(request: any, socket: any, head: any, currentPathNa
     const pair = currentPathName.replace('/origin/tradeStream@', '');
 
     const existedPair = async function () {
-            // @ts-ignore
-            const isPairExists = await mongoClient.findInCollection('pairs', {pair: pair}, {});
-            if (null === isPairExists) await insertNewPair(pair);
+        // @ts-ignore
+        const isPairExists = await mongoClient.findInCollection('pairs', {name: pair}, {});
+        if (null === isPairExists) await insertNewPair(pair);
     };
 
     existedPair().then(() => {
+        (async () => {
+            await increasePairWeight(pair);
+        })();
+
         // @ts-ignore
         wssTradeStreamServers[pair].handleUpgrade(request, socket, head, (ws: WebSocket) => {
             // @ts-ignore
@@ -41,18 +43,24 @@ const validPair = async function validatePair(currentPathName: any) {
 }
 
 async function insertNewPair(newPair: any) {
-    await mongoClient.insertToCollection('pairs', {pair: newPair});
+    await mongoClient.insertToCollection('pairs', {name: newPair, weight: 0});
     createTradeStreamClients(newPair);
     createWssTradeStreamServers(newPair);
     serveStreamSocketServers(newPair);
 }
 
+async function increasePairWeight(pair: any) {
+    const query = {name: pair};
+    const doc = {$inc: {weight: 1}};
+    await mongoClient.updateInCollection('pairs', query, doc, {});
+}
+
 async function startAllExistingPairs() {
-    const currentPairs = await mongoClient.findAllInCollection('pairs');
+    const currentPairs = await mongoClient.findManyInCollection('pairs', {});
     await Promise.all(currentPairs.map(async (currentPair: any) => {
-        createTradeStreamClients(currentPair.pair);
-        createWssTradeStreamServers(currentPair.pair);
-        serveStreamSocketServers(currentPair.pair);
+        createTradeStreamClients(currentPair.name);
+        createWssTradeStreamServers(currentPair.name);
+        serveStreamSocketServers(currentPair.name);
     }));
 }
 

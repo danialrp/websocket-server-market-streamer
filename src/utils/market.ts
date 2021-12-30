@@ -21,7 +21,7 @@ async function getAssetMarkets() {
         });
     });
     // await redisClient.setKeyValue('markets', JSON.stringify(assetMarkets));
-    await mongoClient.deleteInCollection('markets', {}, {});
+    await mongoClient.deleteInCollection('markets', {});
     await mongoClient.insertManyToCollection('markets', assetMarkets, {},);
 
     assetMarkets = [];

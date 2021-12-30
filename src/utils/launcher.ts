@@ -5,7 +5,7 @@ import * as originTradeStream from "../clients/origin-trade-stream";
 import * as assetMarkets from "./market";
 
 function startServices() {
-    assetMarkets.getAssetMarkets();
+    assetMarkets.getAssetMarkets().then();
 
     originMiniTicker.originMiniTickerClient;
     originMiniTicker.wssMiniTickerServer;
