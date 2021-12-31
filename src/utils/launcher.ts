@@ -6,6 +6,8 @@ import * as aggregateTrade from "../clients/origin-aggregate-trade";
 import * as individualMiniTicker from "../clients/origin-mini-ticker-individual";
 import * as individualTicker from "../clients/origin-ticker-individual";
 import * as individualBookTicker from "../clients/origin-book-ticker-individual";
+import * as depthStream from "../clients/origin-depth-stream";
+import * as depthLevelStream from "../clients/origin-depth-diff-stream";
 import * as assetMarkets from "./market";
 
 function startServices() {
@@ -25,6 +27,8 @@ function startServices() {
     individualMiniTicker.handleServerUpgrade(null, null, null, null);
     individualTicker.handleServerUpgrade(null, null, null, null);
     individualBookTicker.handleServerUpgrade(null, null, null, null);
+    depthStream.handleServerUpgrade(null, null, null, null);
+    depthLevelStream.handleServerUpgrade(null, null, null, null);
 }
 
 export {startServices};

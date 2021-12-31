@@ -20,8 +20,9 @@ function handleServerUpgrade(request: any, socket: any, head: any, currentPathNa
     const pair = currentPathName.replace(uri, '');
 
     const existedPair = async function () {
+        const query = {name: pair, level: 0};
         // @ts-ignore
-        const isPairExists = await mongoClient.findInCollection('pairs', {name: pair}, {});
+        const isPairExists = await mongoClient.findInCollection('pairs', query, {});
         if (null === isPairExists) await insertNewPair(pair);
     };
 
@@ -44,14 +45,15 @@ const validPair = async function validatePair(currentPathName: any) {
 }
 
 async function insertNewPair(newPair: any) {
-    await mongoClient.insertToCollection('pairs', {name: newPair, weight: 0});
+    const doc = {name: newPair, weight: 0, level: 0};
+    await mongoClient.insertToCollection('pairs', doc);
     createClients(newPair);
     createWssServers(newPair);
     serveStreamSocketServers(newPair);
 }
 
 async function increasePairWeight(pair: any) {
-    const query = {name: pair};
+    const query = {name: pair, level: 0};
     const doc = {$inc: {weight: 1}};
     await mongoClient.updateInCollection('pairs', query, doc, {});
 }

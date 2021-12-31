@@ -4,9 +4,9 @@ env.config();
 import * as WebSocket from "ws";
 import * as mongoClient from "../utils/mongo";
 
-const uri = '/origin/aggregateTrade@';
-const clientUriAppend = '@aggTrade';
-const consoleConnectionMsg = `Connected To Aggregate Trade Socket.`;
+const uri = '/origin/depth@';
+const clientUriAppend = '@depth';
+const consoleConnectionMsg = `Connected To Diff Depth Stream Socket.`;
 
 let originClients = {};
 let wssServers = {};

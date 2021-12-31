@@ -8,8 +8,8 @@ import * as aggregateTrade from "./clients/origin-aggregate-trade";
 import * as individualMiniTicker from "./clients/origin-mini-ticker-individual";
 import * as individualTicker from "./clients/origin-ticker-individual";
 import * as individualBookTicker from "./clients/origin-book-ticker-individual";
-
-
+import * as depthStream from "./clients/origin-depth-stream";
+import * as depthLevelStream from "./clients/origin-depth-diff-stream";
 
 let currentPathName: string;
 
@@ -25,28 +25,52 @@ function handler(request: any, socket: any, head: any) {
         originBookTicker.handleServerUpgrade(request, socket, head);
     } else if (currentPathName.includes(tradeStream.uri)) {
         tradeStream.validPair(currentPathName).then(validatedPair => {
-            if (null === validatedPair) {socket.destroy(); console.error('INVALID PAIR');}
-            else tradeStream.handleServerUpgrade(request, socket, head, currentPathName);
+            if (null === validatedPair) {
+                socket.destroy();
+                console.error('INVALID PAIR');
+            } else tradeStream.handleServerUpgrade(request, socket, head, currentPathName);
         })
     } else if (currentPathName.includes(aggregateTrade.uri)) {
         aggregateTrade.validPair(currentPathName).then(validatedPair => {
-            if (null === validatedPair) {socket.destroy(); console.error('INVALID PAIR');}
-            else aggregateTrade.handleServerUpgrade(request, socket, head, currentPathName);
+            if (null === validatedPair) {
+                socket.destroy();
+                console.error('INVALID PAIR');
+            } else aggregateTrade.handleServerUpgrade(request, socket, head, currentPathName);
         })
     } else if (currentPathName.includes(individualMiniTicker.uri)) {
         individualMiniTicker.validPair(currentPathName).then(validatedPair => {
-            if (null === validatedPair) {socket.destroy(); console.error('INVALID PAIR');}
-            else individualMiniTicker.handleServerUpgrade(request, socket, head, currentPathName);
+            if (null === validatedPair) {
+                socket.destroy();
+                console.error('INVALID PAIR');
+            } else individualMiniTicker.handleServerUpgrade(request, socket, head, currentPathName);
         })
     } else if (currentPathName.includes(individualTicker.uri)) {
         individualTicker.validPair(currentPathName).then(validatedPair => {
-            if (null === validatedPair) {socket.destroy(); console.error('INVALID PAIR');}
-            else individualTicker.handleServerUpgrade(request, socket, head, currentPathName);
+            if (null === validatedPair) {
+                socket.destroy();
+                console.error('INVALID PAIR');
+            } else individualTicker.handleServerUpgrade(request, socket, head, currentPathName);
         })
     } else if (currentPathName.includes(individualBookTicker.uri)) {
         individualBookTicker.validPair(currentPathName).then(validatedPair => {
-            if (null === validatedPair) {socket.destroy(); console.error('INVALID PAIR');}
-            else individualBookTicker.handleServerUpgrade(request, socket, head, currentPathName);
+            if (null === validatedPair) {
+                socket.destroy();
+                console.error('INVALID PAIR');
+            } else individualBookTicker.handleServerUpgrade(request, socket, head, currentPathName);
+        })
+    } else if (currentPathName.includes(depthStream.uri)) {
+        depthStream.validPair(currentPathName).then(validatedPair => {
+            if (null === validatedPair) {
+                socket.destroy();
+                console.error('INVALID PAIR');
+            } else depthStream.handleServerUpgrade(request, socket, head, currentPathName);
+        })
+    } else if (currentPathName.includes(depthLevelStream.uri)) {
+        depthLevelStream.validPair(currentPathName).then(validatedPair => {
+            if (null === validatedPair) {
+                socket.destroy();
+                console.error('INVALID PAIR');
+            } else depthLevelStream.handleServerUpgrade(request, socket, head, currentPathName);
         })
     } else {
         socket.destroy();

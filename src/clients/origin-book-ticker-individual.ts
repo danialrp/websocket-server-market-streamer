@@ -6,7 +6,7 @@ import * as mongoClient from "../utils/mongo";
 
 const uri = '/origin/bookTicker@';
 const clientUriAppend = '@bookTicker';
-const consoleConnectionMsg = `Connected To Individual Ticker Socket.`;
+const consoleConnectionMsg = `Connected To Individual Book Ticker Socket.`;
 
 let originClients = {};
 let wssServers = {};
