@@ -8,6 +8,7 @@ import * as individualTicker from "../clients/origin-ticker-individual";
 import * as individualBookTicker from "../clients/origin-book-ticker-individual";
 import * as depthStream from "../clients/origin-depth-stream";
 import * as depthLevelStream from "../clients/origin-depth-diff-stream";
+import * as candlestick from "../clients/origin-candlestick";
 import * as assetMarkets from "./market";
 
 function startServices() {
@@ -29,6 +30,7 @@ function startServices() {
     individualBookTicker.handleServerUpgrade(null, null, null, null);
     depthStream.handleServerUpgrade(null, null, null, null);
     depthLevelStream.handleServerUpgrade(null, null, null, null);
+    candlestick.handleServerUpgrade(null, null, null, null);
 }
 
 export {startServices};
