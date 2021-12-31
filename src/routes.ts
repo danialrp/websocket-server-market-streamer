@@ -9,7 +9,7 @@ import * as individualMiniTicker from "./clients/origin-mini-ticker-individual";
 import * as individualTicker from "./clients/origin-ticker-individual";
 import * as individualBookTicker from "./clients/origin-book-ticker-individual";
 import * as depthStream from "./clients/origin-depth-stream";
-import * as depthLevelStream from "./clients/origin-depth-diff-stream";
+import * as depthLevelStream from "./clients/origin-depth-partial-stream";
 import * as candlestick from "./clients/origin-candlestick";
 
 let currentPathName: string;
@@ -68,16 +68,16 @@ function handler(request: any, socket: any, head: any) {
         })
     } else if (currentPathName.includes(candlestick.uri)) {
         candlestick.validPair(currentPathName).then(validatedPair => {
-            if (null === validatedPair) {
+            if (null === validatedPair || false === candlestick.validLevel(currentPathName)) {
                 socket.destroy();
-                console.error('INVALID PAIR');
+                console.error(`INVALID PAIR/INTERVAL`);
             } else candlestick.handleServerUpgrade(request, socket, head, currentPathName);
         })
     }  else if (currentPathName.includes(depthLevelStream.uri)) {
         depthLevelStream.validPair(currentPathName).then(validatedPair => {
-            if (null === validatedPair) {
+            if (null === validatedPair || false === depthLevelStream.validLevel(currentPathName)) {
                 socket.destroy();
-                console.error('INVALID PAIR');
+                console.error('INVALID PAIR/LEVEL');
             } else depthLevelStream.handleServerUpgrade(request, socket, head, currentPathName);
         })
     } else {

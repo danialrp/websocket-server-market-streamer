@@ -48,6 +48,17 @@ const validPair = async function validatePair(currentPathName: any) {
     return await mongoClient.findInCollection('markets', {name: pair}, {});
 }
 
+const validLevel =  (currentPath: any) => {
+    let pairAndLevel = currentPath.replace(uri, '');
+    const askedLevel = pairAndLevel.split('_')[1].replace('_', '');
+    const allowedLevels = [
+        '1m', '3m', '5m', '15m', '30m', '1h', '2h', '4h', '6h', '8h', '12h',
+        '1d', '3d', '1w', '1M'
+    ];
+    // @ts-ignore
+    return allowedLevels.includes(askedLevel);
+}
+
 async function insertNewPair(newPair: any) {
     const doc = {name: newPair, weight: 0, level: level};
     await mongoClient.insertToCollection('pairs', doc);
@@ -109,4 +120,4 @@ function stream(ws: WebSocket, pairAndLevel: any) {
     });
 }
 
-export {uri, handleServerUpgrade, validPair};
+export {uri, handleServerUpgrade, validPair, validLevel};

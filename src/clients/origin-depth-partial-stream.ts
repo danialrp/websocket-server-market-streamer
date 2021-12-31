@@ -48,6 +48,14 @@ const validPair = async function validatePair(currentPathName: any) {
     return await mongoClient.findInCollection('markets', {name: pair}, {});
 }
 
+const validLevel =  (currentPath: any) => {
+    let pairAndLevel = currentPath.replace(uri, '');
+    const askedLevel = pairAndLevel.split('_')[1].replace('_', '');
+    const allowedLevels = ['5', '10', '20'];
+    // @ts-ignore
+    return allowedLevels.includes(askedLevel);
+}
+
 async function insertNewPair(newPair: any) {
     const doc = {name: newPair, weight: 0, level: level};
     await mongoClient.insertToCollection('pairs', doc);
@@ -109,4 +117,4 @@ function stream(ws: WebSocket, pairAndLevel: any) {
     });
 }
 
-export {uri, handleServerUpgrade, validPair};
+export {uri, handleServerUpgrade, validPair, validLevel };

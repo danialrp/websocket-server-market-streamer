@@ -7,7 +7,7 @@ import * as individualMiniTicker from "../clients/origin-mini-ticker-individual"
 import * as individualTicker from "../clients/origin-ticker-individual";
 import * as individualBookTicker from "../clients/origin-book-ticker-individual";
 import * as depthStream from "../clients/origin-depth-stream";
-import * as depthLevelStream from "../clients/origin-depth-diff-stream";
+import * as depthLevelStream from "../clients/origin-depth-partial-stream";
 import * as candlestick from "../clients/origin-candlestick";
 import * as assetMarkets from "./market";
 
