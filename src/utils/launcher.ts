@@ -1,3 +1,6 @@
+const env = require('dotenv');
+env.config();
+
 import * as originMiniTicker from "../clients/origin-mini-ticker";
 import * as originTicker from "../clients/origin-ticker";
 import * as originBookTicker from "../clients/origin-book-ticker";

@@ -1,3 +1,6 @@
+const env = require('dotenv');
+env.config();
+
 const CronJob = require('cron').CronJob;
 
 import * as marketAssets from './market';
