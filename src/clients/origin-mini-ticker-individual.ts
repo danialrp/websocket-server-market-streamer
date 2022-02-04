@@ -22,7 +22,7 @@ function handleServerUpgrade(request: any, socket: any, head: any, currentPathNa
     const existedPair = async function () {
         const query = {name: pair, level: 0};
         // @ts-ignore
-        const isPairExists = await mongoClient.findInCollection('pairs', pair, {});
+        const isPairExists = await mongoClient.findInCollection('pairs', query, {});
         if (null === isPairExists) await insertNewPair(pair);
     };
 
