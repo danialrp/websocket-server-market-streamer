@@ -18,14 +18,19 @@ function handler(request: any, socket: any, head: any) {
     // @ts-ignore
     currentPathName = url.parse(request.url).pathname;
 
-    /*if (currentPathName === originMiniTicker.uri) {
-        originMiniTicker.handleServerUpgrade(request, socket, head);
+    if (currentPathName === originMiniTicker.uri) {
+        // originMiniTicker.handleServerUpgrade(request, socket, head);
+        socket.destroy();
+        console.error('THIS SOCKET IS NOT ACTIVE ANYMORE.');
     } else if (currentPathName === originTicker.uri) {
-        originTicker.handleServerUpgrade(request, socket, head);
+        // originTicker.handleServerUpgrade(request, socket, head);
+        socket.destroy();
+        console.error('THIS SOCKET IS NOT ACTIVE ANYMORE.');
     } else if (currentPathName === originBookTicker.uri) {
-        originBookTicker.handleServerUpgrade(request, socket, head);
-    } else*/
-    if (currentPathName.includes(tradeStream.uri)) {
+        // originBookTicker.handleServerUpgrade(request, socket, head);
+        socket.destroy();
+        console.error('THIS SOCKET IS NOT ACTIVE ANYMORE.');
+    } else if (currentPathName.includes(tradeStream.uri)) {
         tradeStream.validPair(currentPathName).then(validatedPair => {
             if (null === validatedPair) {
                 socket.destroy();
