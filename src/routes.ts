@@ -18,13 +18,14 @@ function handler(request: any, socket: any, head: any) {
     // @ts-ignore
     currentPathName = url.parse(request.url).pathname;
 
-    if (currentPathName === originMiniTicker.uri) {
+    /*if (currentPathName === originMiniTicker.uri) {
         originMiniTicker.handleServerUpgrade(request, socket, head);
     } else if (currentPathName === originTicker.uri) {
         originTicker.handleServerUpgrade(request, socket, head);
     } else if (currentPathName === originBookTicker.uri) {
         originBookTicker.handleServerUpgrade(request, socket, head);
-    } else if (currentPathName.includes(tradeStream.uri)) {
+    } else*/
+    if (currentPathName.includes(tradeStream.uri)) {
         tradeStream.validPair(currentPathName).then(validatedPair => {
             if (null === validatedPair) {
                 socket.destroy();
@@ -73,7 +74,7 @@ function handler(request: any, socket: any, head: any) {
                 console.error(`INVALID PAIR/INTERVAL`);
             } else candlestick.handleServerUpgrade(request, socket, head, currentPathName);
         })
-    }  else if (currentPathName.includes(depthLevelStream.uri)) {
+    } else if (currentPathName.includes(depthLevelStream.uri)) {
         depthLevelStream.validPair(currentPathName).then(validatedPair => {
             if (null === validatedPair || false === depthLevelStream.validLevel(currentPathName)) {
                 socket.destroy();
