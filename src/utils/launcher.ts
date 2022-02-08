@@ -17,15 +17,6 @@ import * as assetMarkets from "./market";
 function startServices() {
     assetMarkets.getAssetMarkets().then();
 
-    originMiniTicker.originMiniTickerClient;
-    originMiniTicker.wssMiniTickerServer;
-
-    originTicker.originTickerClient;
-    originTicker.wssTickerServer;
-
-    originBookTicker.originBookTickerClient;
-    originBookTicker.wssBookTickerServer;
-
     originTradeStream.handleServerUpgrade(null, null, null, null);
     aggregateTrade.handleServerUpgrade(null, null, null, null);
     individualMiniTicker.handleServerUpgrade(null, null, null, null);
@@ -34,6 +25,10 @@ function startServices() {
     depthStream.handleServerUpgrade(null, null, null, null);
     depthLevelStream.handleServerUpgrade(null, null, null, null);
     candlestick.handleServerUpgrade(null, null, null, null);
+
+    /*originMiniTicker.wssMiniTickerServer;
+    originTicker.wssTickerServer;
+    originBookTicker.wssBookTickerServer;*/
 }
 
 export {startServices};

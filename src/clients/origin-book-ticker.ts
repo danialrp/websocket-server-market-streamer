@@ -5,7 +5,6 @@ import * as WebSocket from "ws";
 
 const uri = '/origin/!bookTicker';
 
-const originBookTickerClient = new WebSocket(process.env.BNC_WS_URL + '/ws/!bookTicker');
 const wssBookTickerServer = new WebSocket.Server({noServer: true});
 
 function handleServerUpgrade(request: any, socket: any, head: any) {
@@ -25,9 +24,11 @@ wssBookTickerServer.on('connection', function connection(ws: WebSocket) {
 });
 
 function stream(ws: WebSocket) {
+    const originBookTickerClient = new WebSocket(process.env.BNC_WS_URL + '/ws/!bookTicker');
+
     originBookTickerClient.addEventListener('message', (data) => {
         ws.send(data.data);
     });
 }
 
-export {uri, handleServerUpgrade, wssBookTickerServer, originBookTickerClient};
+export {uri, handleServerUpgrade, wssBookTickerServer};
