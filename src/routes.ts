@@ -1,7 +1,7 @@
 import * as url from 'url';
 
+import * as originTicker from "./clients/origin-ticker";
 // import * as originMiniTicker from "./clients/origin-mini-ticker";
-// import * as originTicker from "./clients/origin-ticker";
 // import * as originBookTicker from "./clients/origin-book-ticker";
 import * as tradeStream from "./clients/origin-trade-stream";
 import * as aggregateTrade from "./clients/origin-aggregate-trade";
@@ -21,13 +21,13 @@ function handler(request: any, socket: any, head: any) {
     /*if (currentPathName === originMiniTicker.uri) {
         originMiniTicker.handleServerUpgrade(request, socket, head);
         console.error('THIS SOCKET IS NOT ACTIVE.');
-    } else if (currentPathName === originTicker.uri) {
-        originTicker.handleServerUpgrade(request, socket, head);
-        console.error('THIS SOCKET IS NOT ACTIVE.');
     } else if (currentPathName === originBookTicker.uri) {
         originBookTicker.handleServerUpgrade(request, socket, head);
         console.error('THIS SOCKET IS NOT ACTIVE.');
-    } else*/ if (currentPathName.includes(tradeStream.uri)) {
+    } else*/ if (currentPathName === originTicker.uri) {
+        originTicker.handleServerUpgrade(request, socket, head);
+        console.error('THIS SOCKET IS NOT ACTIVE.');
+    } else if (currentPathName.includes(tradeStream.uri)) {
         tradeStream.validPair(currentPathName).then(validatedPair => {
             if (null === validatedPair) {
                 socket.destroy();
