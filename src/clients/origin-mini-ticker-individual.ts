@@ -4,13 +4,12 @@ env.config();
 import * as WebSocket from "ws";
 import * as mongoClient from "../utils/mongo";
 
-const uri = '/origin/tradeStream@';
-const clientUriAppend = '@trade';
-const consoleConnectionMsg = `Connected To Trade Stream Socket.`;
+const uri = '/origin/miniTicker@';
+const clientUriAppend = '@miniTicker';
+const consoleConnectionMsg = `Connected To Individual Mini Ticker Socket.`;
 
-
-let originTradeStreamClients = {};
-let wssTradeStreamServers = {};
+let originClients = {};
+let wssServers = {};
 
 function handleServerUpgrade(request: any, socket: any, head: any, currentPathName: any) {
     if (null === request || null === socket || null === head || null === currentPathName) {
@@ -33,9 +32,9 @@ function handleServerUpgrade(request: any, socket: any, head: any, currentPathNa
         })();
 
         // @ts-ignore
-        wssTradeStreamServers[pair].handleUpgrade(request, socket, head, (ws: WebSocket) => {
+        wssServers[pair].handleUpgrade(request, socket, head, (ws: WebSocket) => {
             // @ts-ignore
-            wssTradeStreamServers[pair].emit('connection', ws, request);
+            wssServers[pair].emit('connection', ws, request);
         });
     });
 }
@@ -71,17 +70,17 @@ async function startAllExistingPairs() {
 function createClients(pair: any) {
     const market = pair.concat(clientUriAppend);
     // @ts-ignore
-    originTradeStreamClients[pair] = new WebSocket(process.env.BNC_WS_URL + '/ws/' + market);
+    originClients[pair] = new WebSocket(process.env.BNC_WS_URL + '/ws/' + market);
 }
 
 function createWssServers(pair: any) {
     // @ts-ignore
-    wssTradeStreamServers[pair] = new WebSocket.Server({noServer: true});
+    wssServers[pair] = new WebSocket.Server({noServer: true});
 }
 
 function serveStreamSocketServers(pair: any) {
     // @ts-ignore
-    wssTradeStreamServers[pair].on('connection', function connection(ws: WebSocket) {
+    wssServers[pair].on('connection', function connection(ws: WebSocket) {
         console.log(consoleConnectionMsg);
         // @ts-ignore
         ws.addEventListener('connection', (() => {
@@ -92,7 +91,7 @@ function serveStreamSocketServers(pair: any) {
 
 function stream(ws: WebSocket, pair: any) {
     // @ts-ignore
-    originTradeStreamClients[pair].addEventListener('message', (data) => {
+    originClients[pair].addEventListener('message', (data) => {
         ws.send(data.data);
     });
 }

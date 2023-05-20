@@ -4,7 +4,9 @@
   "description": "wss middle man rate server",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "./node_modules/typescript/bin/tsc",
+    "watch": "pm2 stop dist/server.js --watch && tsc && pm2 start dist/server.js --watch"
   },
   "author": "Danial",
   "license": "ISC",

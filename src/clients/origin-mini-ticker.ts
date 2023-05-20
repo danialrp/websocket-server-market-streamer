@@ -5,7 +5,6 @@ import * as WebSocket from "ws";
 
 const uri = '/origin/!miniTicker';
 
-const originMiniTickerClient = new WebSocket(process.env.BNC_WS_URL + '/ws/!miniTicker@arr');
 const wssMiniTickerServer = new WebSocket.Server({noServer: true});
 
 function handleServerUpgrade(request: any, socket: any, head: any) {
@@ -25,9 +24,11 @@ wssMiniTickerServer.on('connection', function connection(ws: WebSocket) {
 });
 
 function stream(ws: WebSocket) {
+    const originMiniTickerClient = new WebSocket(process.env.BNC_WS_URL + '/ws/!miniTicker@arr');
+
     originMiniTickerClient.addEventListener('message', (data) => {
         ws.send(data.data);
     });
 }
 
-export {uri, handleServerUpgrade, wssMiniTickerServer, originMiniTickerClient};
+export {uri, handleServerUpgrade, wssMiniTickerServer};
