@@ -35,3 +35,4 @@ dist/**/*
 yarn.lock
 # other
 _temp
+/storage

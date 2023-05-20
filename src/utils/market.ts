@@ -15,7 +15,7 @@ const response = async function getMarkets() {
 
 async function getAssetMarkets() {
     const responseData = await response();
-    responseData.data.data.assets.forEach(function each(asset: any) {
+    responseData.data.data.forEach(function each(asset: any) {
         asset.markets.forEach(function each(market: any) {
             assetMarkets.push({name : market.toLowerCase()});
         });

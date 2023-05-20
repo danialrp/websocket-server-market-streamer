@@ -22,4 +22,5 @@ server.listen(process.env.PORT, () => {
     cronJob.updateAssetMarketJob.start();
     cronJob.restartServer.start();
     launcher.startServices();
+    console.log(`Application Services Lunched`);
 });

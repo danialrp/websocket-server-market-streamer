@@ -1,0 +1,46 @@
+version: '3'
+services:
+  irbtc-wss.test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '${PORT:-8080}:8080'
+    env_file: .env
+    environment:
+      - NODE_ENV=development
+      - REDIS_URL=${REDIS_CONNECTION_URL}
+      - MONGODB_URL=${MONGODB_CONNECTION_URL}
+      - DB_NAME=${MONGODB_NAME}
+    volumes:
+      - './src:/wss/src'
+    networks:
+      - wss_network
+    depends_on:
+      - mongodb
+      - redis
+  mongodb:
+    image: mongo:4.2.5
+    env_file: .env
+    ports:
+      - '27017:27017'
+    volumes:
+      - './storage/dbdata/mongodb:/data/db'
+    networks:
+      - wss_network
+  redis:
+    image: 'redis:alpine'
+    ports:
+      - '6379:6379'
+    volumes:
+      - './storage/dbdata/redis:/data'
+    networks:
+      - wss_network
+networks:
+  wss_network:
+    driver: bridge
+volumes:
+  wss-mongodb:
+    driver: local
+  wss-redis:
+    driver: local

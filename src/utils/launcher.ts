@@ -3,7 +3,6 @@ env.config();
 
 import * as originMiniTicker from "../clients/origin-mini-ticker";
 import * as originTicker from "../clients/origin-ticker";
-import * as originBookTicker from "../clients/origin-book-ticker";
 import * as originTradeStream from "../clients/origin-trade-stream";
 import * as aggregateTrade from "../clients/origin-aggregate-trade";
 import * as individualMiniTicker from "../clients/origin-mini-ticker-individual";
@@ -26,9 +25,8 @@ function startServices() {
     depthLevelStream.handleServerUpgrade(null, null, null, null);
     candlestick.handleServerUpgrade(null, null, null, null);
 
-    /*originMiniTicker.wssMiniTickerServer;
+    originMiniTicker.wssMiniTickerServer;
     originTicker.wssTickerServer;
-    originBookTicker.wssBookTickerServer;*/
 }
 
 export {startServices};
