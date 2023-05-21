@@ -49,7 +49,7 @@
 - check MongoDb status `sudo systemctl status mongod`
 
 #### Sample Deploy Script <br/>
-      ```sh
+      ```
        cd /home/forge/stream.irbtc.net
        git pull origin $FORGE_SITE_BRANCH
 
@@ -64,7 +64,7 @@
        pm2 restart /home/forge/stream.irbtc.net/dist/server.js
       ```
 #### Sample Nginx.conf Configuration <br/>
-      ```sh
+      ```
     server {
          listen 443 ssl http2;
          listen [::]:443 ssl http2;
@@ -119,16 +119,16 @@
 - `ws://0.0.0.0:8080/origin/candlestick@btcusdt_5m` // '1m', '3m', '5m', '15m', '30m', '1h', '2h', '4h', '6h', '8h', '12h', '1d', '3d', '1w', '1M'
 
 #### Sample Production Socket
--`wss://stream.irbtc.net:443/origin/!ticker`
--`wss://stream.irbtc.net:443/origin/!miniTicker`
--`wss://stream.irbtc.net:443/origin/tradeStream@btcusdt`
--`wss://stream.irbtc.net:443/origin/aggregateTrade@btcusdt`
--`wss://stream.irbtc.net:443/origin/ticker@btcusdt`
--`wss://stream.irbtc.net:443/origin/bookTicker@btcusdt`
--`wss://stream.irbtc.net:443/origin/depth@btcusdt`
--`wss://stream.irbtc.net:443/origin/depthLevel@btcusdt_5` // '5', '10', '20'
--`wss://stream.irbtc.net:443/origin/candlestick@btcusdt_5m` // '1m', '3m', '5m', '15m', '30m', '1h', '2h', '4h', '6h', '8h', '12h', '1d', '3d', '1w', '1M'
+- `wss://stream.irbtc.net:443/origin/!ticker`
+- `wss://stream.irbtc.net:443/origin/!miniTicker`
+- `wss://stream.irbtc.net:443/origin/tradeStream@btcusdt`
+- `wss://stream.irbtc.net:443/origin/aggregateTrade@btcusdt`
+- `wss://stream.irbtc.net:443/origin/ticker@btcusdt`
+- `wss://stream.irbtc.net:443/origin/bookTicker@btcusdt`
+- `wss://stream.irbtc.net:443/origin/depth@btcusdt`
+- `wss://stream.irbtc.net:443/origin/depthLevel@btcusdt_5` // '5', '10', '20'
+- `wss://stream.irbtc.net:443/origin/candlestick@btcusdt_5m` // '1m', '3m', '5m', '15m', '30m', '1h', '2h', '4h', '6h', '8h', '12h', '1d', '3d', '1w', '1M'
 
 ##### Sample Binance Socket
--`wss://stream.binance.com:9443/ws/btcusdt@trade`
+- `wss://stream.binance.com:9443/ws/btcusdt@trade`
 
