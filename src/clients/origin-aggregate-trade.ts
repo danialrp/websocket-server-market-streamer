@@ -6,7 +6,9 @@ import * as mongoClient from "../utils/mongo";
 
 const uri = '/origin/aggregateTrade@';
 const clientUriAppend = '@aggTrade';
-const consoleConnectionMsg = `Connected To Aggregate Trade Socket.`;
+const openConnectionMsg = `Connected To Aggregate Trade Socket.`;
+const closeConnectionMsg = `Disconnected From Aggregate Trade Socket.`;
+const errorConnectionMsg = `Origin Aggregate Trade Client Error On Connection To Provider!`;
 
 let originClients = {};
 let wssServers = {};
@@ -81,11 +83,17 @@ function createWssServers(pair: any) {
 function serveStreamSocketServers(pair: any) {
     // @ts-ignore
     wssServers[pair].on('connection', function connection(ws: WebSocket) {
-        console.log(consoleConnectionMsg);
         // @ts-ignore
         ws.addEventListener('connection', (() => {
             stream(ws, pair);
         })());
+
+        // @ts-ignore
+        ws.onclose = function () {
+            console.log(closeConnectionMsg);
+            // @ts-ignore
+            ws = null;
+        };
     });
 }
 

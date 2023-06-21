@@ -6,7 +6,9 @@ import * as mongoClient from "../utils/mongo";
 
 const uri = '/origin/tradeStream@';
 const clientUriAppend = '@trade';
-const consoleConnectionMsg = `Connected To Trade Stream Socket.`;
+const openConnectionMsg = `Connected To Trade Stream Socket.`;
+const closeConnectionMsg = `Disconnected From Trade Stream Socket.`;
+const errorConnectionMsg = `Trade Stream Client Error On Connection To Provider!`;
 
 
 let originTradeStreamClients = {};
@@ -82,11 +84,17 @@ function createWssServers(pair: any) {
 function serveStreamSocketServers(pair: any) {
     // @ts-ignore
     wssTradeStreamServers[pair].on('connection', function connection(ws: WebSocket) {
-        console.log(consoleConnectionMsg);
         // @ts-ignore
         ws.addEventListener('connection', (() => {
             stream(ws, pair);
         })());
+
+        // @ts-ignore
+        ws.onclose = function () {
+            console.log(closeConnectionMsg);
+            // @ts-ignore
+            ws = null;
+        };
     });
 }
 
