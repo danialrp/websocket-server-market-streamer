@@ -6,7 +6,9 @@ import * as mongoClient from "../utils/mongo";
 
 const uri = '/origin/depth@';
 const clientUriAppend = '@depth';
-const consoleConnectionMsg = `Connected To Diff Depth Stream Socket.`;
+const openConnectionMsg = `Connected To Diff Depth Stream Socket.`;
+const closeConnectionMsg = `Disconnected From Diff Depth Stream Socket.`;
+const errorConnectionMsg = `Diff Depth Stream Client Error On Connection To Provider!`;
 
 let originClients = {};
 let wssServers = {};
@@ -81,11 +83,17 @@ function createWssServers(pair: any) {
 function serveStreamSocketServers(pair: any) {
     // @ts-ignore
     wssServers[pair].on('connection', function connection(ws: WebSocket) {
-        console.log(consoleConnectionMsg);
         // @ts-ignore
         ws.addEventListener('connection', (() => {
             stream(ws, pair);
         })());
+
+        // @ts-ignore
+        ws.onclose = function () {
+            console.log(closeConnectionMsg);
+            // @ts-ignore
+            ws = null;
+        };
     });
 }
 

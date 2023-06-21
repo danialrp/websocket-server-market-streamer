@@ -6,7 +6,9 @@ import * as mongoClient from "../utils/mongo";
 
 const uri = '/origin/bookTicker@';
 const clientUriAppend = '@bookTicker';
-const consoleConnectionMsg = `Connected To Individual Book Ticker Socket.`;
+const openConnectionMsg = `Connected To Individual Book Ticker Socket.`;
+const closeConnectionMsg = `Disconnected From Individual Book Ticker Socket.`;
+const errorConnectionMsg = `Individual Book Ticker Client Error On Connection To Provider!`;
 
 let originClients = {};
 let wssServers = {};
@@ -79,11 +81,17 @@ function createWssServers(pair: any) {
 function serveStreamSocketServers(pair: any) {
     // @ts-ignore
     wssServers[pair].on('connection', function connection(ws: WebSocket) {
-        console.log(consoleConnectionMsg);
         // @ts-ignore
         ws.addEventListener('connection', (() => {
             stream(ws, pair);
         })());
+
+        // @ts-ignore
+        ws.onclose = function () {
+            console.log(closeConnectionMsg);
+            // @ts-ignore
+            ws = null;
+        };
     });
 }
 

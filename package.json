@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "./node_modules/typescript/bin/tsc",
-    "watch": "pm2 stop dist/server.js --watch && tsc && pm2 start dist/server.js --watch"
+    "watch": "pm2 stop dist/server.js --watch && tsc && pm2 start dist/server.js --watch",
+    "dev": "pm2 stop dist/server.js && tsc && pm2 start dist/server.js"
   },
   "author": "Danial",
   "license": "ISC",

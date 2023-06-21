@@ -7,7 +7,9 @@ import * as mongoClient from "../utils/mongo";
 const uri = '/origin/candlestick@';
 let clientUriAppend = '@kline_';
 let level = 0;
-const consoleConnectionMsg = `Connected To Candlestick Socket.`;
+const openConnectionMsg = `Connected To Candlestick Socket.`;
+const closeConnectionMsg = `Disconnected From Candlestick Socket.`;
+const errorConnectionMsg = `Candlestick Client Error On Connection To Provider!`;
 
 let originClients = {};
 let wssServers = {};
@@ -105,11 +107,17 @@ function createWssServers(pairAndLevel: any) {
 function serveStreamSocketServers(pairAndLevel: any) {
     // @ts-ignore
     wssServers[pairAndLevel].on('connection', function connection(ws: WebSocket) {
-        console.log(consoleConnectionMsg);
         // @ts-ignore
         ws.addEventListener('connection', (() => {
             stream(ws, pairAndLevel);
         })());
+
+        // @ts-ignore
+        ws.onclose = function () {
+            console.log(closeConnectionMsg);
+            // @ts-ignore
+            ws = null;
+        };
     });
 }
 
