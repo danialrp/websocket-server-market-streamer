@@ -5,7 +5,8 @@
 - Build docker image and run it `docker-compose up --build` 
 
 #### Node
-- Run `npm run watch` (compile /src directory and start dist/server.js)
+- For first time compile the project `npm run start` (compile /src directory and start dist/server.js)
+- Run `npm run watch` (compile /src directory and start dist/server.js with the --watch flag)
 - For more details check `package.json -> scripts`
 
 #### PM2 (Alternative for Node)
@@ -17,7 +18,7 @@
 - ssh to server
 - navigate to project directory
 - create .env file `cp .env-example .env` and set variables
-- install npm dependencies `suod npm i`
+- install npm dependencies `sudo npm i`
 - install type script `sudo npm i -g typescript@4.5.4`
 - install pm2 `sudo npm i -g pm2@5.1.2`
 - execute `npm run build` or `tsc`
@@ -31,7 +32,7 @@
   - `make`
   - `sudo make install`
   - `cd utils/`
-  - `./install_server.sh`
+  - `sudo ./install_server.sh`
 - answer all questions with default answers
 - then run redis server `sudo service redis_6379 start`
 - make it always running by linux `sudo systemctl enable redis_6379`
@@ -59,8 +60,8 @@
        # npm run build ///UNCOMMENT FOR FIRT DEPLOY ONLY
        pm2 stop /home/forge/stream.irbtc.net/dist/server.js
        rm -r /home/forge/stream.irbtc.net/dist
-       pm2 restart all --update-env
        npm run build
+       pm2 restart all --update-env
        pm2 restart /home/forge/stream.irbtc.net/dist/server.js
       ```
 #### Sample Nginx.conf Configuration <br/>

@@ -13,12 +13,13 @@ services:
       - MONGODB_URL=${MONGODB_CONNECTION_URL}
       - DB_NAME=${MONGODB_NAME}
     volumes:
-      - './src:/wss/src'
+      - '.:/wss'
     networks:
       - wss_network
     depends_on:
       - mongodb
       - redis
+    restart: always
   mongodb:
     image: mongo:4.2.5
     env_file: .env
@@ -28,6 +29,7 @@ services:
       - './storage/dbdata/mongodb:/data/db'
     networks:
       - wss_network
+    restart: always
   redis:
     image: 'redis:alpine'
     ports:
@@ -36,6 +38,7 @@ services:
       - './storage/dbdata/redis:/data'
     networks:
       - wss_network
+    restart: always
 networks:
   wss_network:
     driver: bridge
