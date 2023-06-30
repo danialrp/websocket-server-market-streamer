@@ -18,7 +18,6 @@ server.on('upgrade', (request, socket, head) => {
 
 server.listen(process.env.PORT, () => {
     console.log(`Node Server Started`);
-    cronJob.cleansingPairs.start();
     cronJob.updateAssetMarketJob.start();
     cronJob.restartServer.start();
     launcher.startServices();

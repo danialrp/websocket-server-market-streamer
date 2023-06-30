@@ -3,7 +3,6 @@ env.config();
 
 import axios from "axios";
 import * as redisClient from "./redis";
-import * as mongoClient from "../utils/mongo";
 
 const url = process.env.ASSET_MARKET_URL;
 let assetMarkets: any[] = [];
@@ -21,8 +20,6 @@ async function getAssetMarkets() {
         });
     });
     // await redisClient.setKeyValue('markets', JSON.stringify(assetMarkets));
-    await mongoClient.deleteInCollection('markets', {});
-    await mongoClient.insertManyToCollection('markets', assetMarkets, {},);
 
     assetMarkets = [];
 }

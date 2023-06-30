@@ -111,6 +111,7 @@
 #### Sample Local Socket (Docker Container)
 - `ws://0.0.0.0:8080/origin/!ticker`
 - `ws://0.0.0.0:8080/origin/!miniTicker`
+- `ws://0.0.0.0:8080/origin/miniTicker@btcusdt`
 - `ws://0.0.0.0:8080/origin/tradeStream@btcusdt`
 - `ws://0.0.0.0:8080/origin/aggregateTrade@btcusdt`
 - `ws://0.0.0.0:8080/origin/ticker@btcusdt`
@@ -122,6 +123,7 @@
 #### Sample Production Socket
 - `wss://stream.irbtc.net:443/origin/!ticker`
 - `wss://stream.irbtc.net:443/origin/!miniTicker`
+- `wss://stream.irbtc.net:443/origin/miniTicker@btcusdt`
 - `wss://stream.irbtc.net:443/origin/tradeStream@btcusdt`
 - `wss://stream.irbtc.net:443/origin/aggregateTrade@btcusdt`
 - `wss://stream.irbtc.net:443/origin/ticker@btcusdt`
