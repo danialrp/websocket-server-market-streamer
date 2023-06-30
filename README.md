@@ -10,8 +10,8 @@
 - For more details check `package.json -> scripts`
 
 #### PM2 (Alternative for Node)
-- Run `pm2 stop dist/server.js --watch` then `tsc && pm2 start dist/server.js --watch`
-- or Run `tsc && pm2 restart dist/server.js --watch`
+- For the first time `./node_modules/typescript/bin/tsc && ./node_modules/pm2/bin/pm2 start dist/server.js`
+- re-Run with watch `./node_modules/typescript/bin/tsc && ./node_modules/pm2/bin/pm2 restart dist/server.js --watch`
 - see live shell logs `pm2 logs`
 
 ## Production Deployment and Running
@@ -19,9 +19,8 @@
 - navigate to project directory
 - create .env file `cp .env-example .env` and set variables
 - install npm dependencies `sudo npm i`
-- install type script `sudo npm i -g typescript@4.5.4`
-- install pm2 `sudo npm i -g pm2@5.1.2`
-- execute `npm run build` or `tsc`
+- execute `npm run build`
+- execute `npm run start`
 
 #### Install Redis (v4.0.1)
 - navigate to outside of project directory
@@ -39,15 +38,6 @@
 - check redis status `sudo systemctl status redis_6379`
 - delete archive file `rm -r redis-4.0.1.tar.gz`
 - delete source dir `rm -r redis-4.0.1/` -> answer "yes"
-
-#### Install MongoDB (v4.2.5)
-- get official package `wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -`
-- add MongoDb repo `echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.2.list`
-- update apt `sudo apt update`
-- install MongoDb `sudo apt-get install mongodb-org -y`
-- then run MongoDb `sudo systemctl start mongod.service`
-- make it always running by linux `sudo systemctl enable mongod.service`
-- check MongoDb status `sudo systemctl status mongod`
 
 #### Sample Deploy Script <br/>
       ```

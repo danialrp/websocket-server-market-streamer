@@ -9,9 +9,7 @@ COPY package*.json ./
 COPY tsconfig*.json ./
 
 # Install dependencies
-RUN NODE_ENV=development npm i
-RUN npm i -g typescript@4.5.4
-RUN npm i -g pm2@5.1.2
+RUN npm install
 
 # Copy the rest of the application code to /app-dir
 COPY . .
