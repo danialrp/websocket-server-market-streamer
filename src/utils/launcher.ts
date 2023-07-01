@@ -16,17 +16,17 @@ import * as assetMarkets from "./market";
 function startServices() {
     assetMarkets.getAssetMarkets().then();
 
-    originTradeStream.handleServerUpgrade(null, null, null, null);
-    aggregateTrade.handleServerUpgrade(null, null, null, null);
-    individualMiniTicker.handleServerUpgrade(null, null, null, null);
-    individualTicker.handleServerUpgrade(null, null, null, null);
-    individualBookTicker.handleServerUpgrade(null, null, null, null);
-    depthStream.handleServerUpgrade(null, null, null, null);
-    depthLevelStream.handleServerUpgrade(null, null, null, null);
-    candlestick.handleServerUpgrade(null, null, null, null);
+    // originTradeStream.handleServerUpgrade(null, null, null, null);
+    // aggregateTrade.handleServerUpgrade(null, null, null, null);
+    // individualMiniTicker.handleServerUpgrade(null, null, null, null);
+    // individualTicker.handleServerUpgrade(null, null, null, null);
+    // individualBookTicker.handleServerUpgrade(null, null, null, null);
+    // depthStream.handleServerUpgrade(null, null, null, null);
+    // depthLevelStream.handleServerUpgrade(null, null, null, null);
+    // candlestick.handleServerUpgrade(null, null, null, null);
 
-    originMiniTicker.wssMiniTickerServer;
-    originTicker.wssTickerServer;
+    // originMiniTicker.wssMiniTickerServer;
+    // originTicker.wssTickerServer;
 }
 
 export {startServices};
