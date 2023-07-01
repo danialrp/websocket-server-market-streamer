@@ -12,15 +12,12 @@
 #### PM2 (Alternative for Node)
 - For the first time `./node_modules/typescript/bin/tsc && ./node_modules/pm2/bin/pm2 start dist/server.js`
 - re-Run with watch `./node_modules/typescript/bin/tsc && ./node_modules/pm2/bin/pm2 restart dist/server.js --watch`
-- see live shell logs `pm2 logs`
+- see live shell logs `./node_modules/pm2/bin/pm2 logs`
 
 ## Production Deployment and Running
 - ssh to server
 - navigate to project directory
 - create .env file `cp .env-example .env` and set variables
-- install npm dependencies `sudo npm i`
-- execute `npm run build`
-- execute `npm run start`
 
 #### Install Redis (v4.0.1)
 - navigate to outside of project directory
@@ -35,9 +32,15 @@
 - answer all questions with default answers
 - then run redis server `sudo service redis_6379 start`
 - make it always running by linux `sudo systemctl enable redis_6379`
-- check redis status `sudo systemctl status redis_6379`
 - delete archive file `rm -r redis-4.0.1.tar.gz`
 - delete source dir `rm -r redis-4.0.1/` -> answer "yes"
+- check redis status `sudo systemctl restart redis_6379`
+- check redis status `sudo systemctl status redis_6379`
+
+#### Install NPM Dependencies
+- install dependencies `npm ci`
+- build project for the first time `npm run build`
+- start express server as the initial start `npm run start`
 
 #### Sample Deploy Script <br/>
       ```
@@ -47,12 +50,11 @@
        ( flock -w 10 9 || exit 1
            echo 'Restarting FPM...'; sudo -S service $FORGE_PHP_FPM reload ) 9>/tmp/fpmlock
 
-       # npm run build ///UNCOMMENT FOR FIRT DEPLOY ONLY
-       pm2 stop /home/forge/stream.irbtc.net/dist/server.js
+       ./node_modules/pm2/bin/pm2 stop server
        rm -r /home/forge/stream.irbtc.net/dist
-       npm run build
-       pm2 restart all --update-env
-       pm2 restart /home/forge/stream.irbtc.net/dist/server.js
+       npm ci
+       ./node_modules/pm2/bin/pm2 restart all --update-env
+       npm run start
       ```
 #### Sample Nginx.conf Configuration <br/>
       ```
@@ -87,7 +89,6 @@
              proxy_set_header Upgrade $http_upgrade;
              proxy_set_header Connection "upgrade";
              proxy_read_timeout 86400;
-     
          }
      
          location ~ /\.(?!well-known).* {
@@ -113,10 +114,10 @@
 #### Sample Production Socket
 - `wss://stream.irbtc.net:443/origin/!ticker`
 - `wss://stream.irbtc.net:443/origin/!miniTicker`
+- `wss://stream.irbtc.net:443/origin/ticker@btcusdt`
 - `wss://stream.irbtc.net:443/origin/miniTicker@btcusdt`
 - `wss://stream.irbtc.net:443/origin/tradeStream@btcusdt`
 - `wss://stream.irbtc.net:443/origin/aggregateTrade@btcusdt`
-- `wss://stream.irbtc.net:443/origin/ticker@btcusdt`
 - `wss://stream.irbtc.net:443/origin/bookTicker@btcusdt`
 - `wss://stream.irbtc.net:443/origin/depth@btcusdt`
 - `wss://stream.irbtc.net:443/origin/depthLevel@btcusdt_5` // '5', '10', '20'
