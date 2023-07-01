@@ -17,10 +17,9 @@ server.on('upgrade', (request, socket, head) => {
 });
 
 server.listen(process.env.PORT, () => {
-    console.log(`Node Server Started`);
-    cronJob.cleansingPairs.start();
+    console.log(`Node Server Started @ ` + process.env.PORT);
     cronJob.updateAssetMarketJob.start();
     cronJob.restartServer.start();
     launcher.startServices();
-    console.log(`Application Services Lunched`);
+    console.log(`Application Services Lunched.`);
 });
