@@ -56,8 +56,16 @@ function createClients(pair: any) {
     const market = pair.concat(clientUriAppend);
     const marketAndLevel = level !== 0 ? market + level : market;
     const market_level = createPairAndLevel(pair, level, '_');
+    const providerUrl = process.env.BNC_WS_URL + '/ws/' + marketAndLevel;
+
     // @ts-ignore
-    originClients[market_level] = new WebSocket(process.env.BNC_WS_URL + '/ws/' + marketAndLevel);
+    if (typeof originClients[market_level] !== "undefined") {
+        return;
+    }
+
+    // Create new pair/level client, if it's not already exists
+    // @ts-ignore
+    originClients[market_level] = new WebSocket(providerUrl);
 }
 
 function createWssServers(pairAndLevel: any) {

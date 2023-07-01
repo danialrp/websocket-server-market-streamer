@@ -11,8 +11,8 @@ const updateAssetMarketJob = new CronJob('0 0 8 * * *', async function () {
     await marketAssets.getAssetMarkets();
 }, null, true, 'UTC');
 
-// Every 3hrs.
-const restartServer = new CronJob('0 0 */3 * * *', async function () {
+// Every 30min.
+const restartServer = new CronJob('0 */30 * * * *', async function () {
     serverRefresher.restartServer();
 }, null, true, 'UTC');
 

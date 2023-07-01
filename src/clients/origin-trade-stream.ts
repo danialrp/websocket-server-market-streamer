@@ -38,8 +38,16 @@ const validPair = async function validatePair(currentPathName: any) {
 
 function createClients(pair: any) {
     const market = pair.concat(clientUriAppend);
+    const providerUrl = process.env.BNC_WS_URL + '/ws/' + market;
+
     // @ts-ignore
-    originTradeStreamClients[pair] = new WebSocket(process.env.BNC_WS_URL + '/ws/' + market);
+    if (typeof originTradeStreamClients[pair] !== "undefined") {
+        return;
+    }
+
+    // Create new pair client, if it's not already exists
+    // @ts-ignore
+    originTradeStreamClients[pair] = new WebSocket(providerUrl);
 }
 
 function createWssServers(pair: any) {
